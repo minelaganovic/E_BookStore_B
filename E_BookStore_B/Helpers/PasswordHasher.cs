@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace EBookStore_B.Helpers
+namespace E_BookStore_B.Helpers
 {
     public class PasswordHasher
     {

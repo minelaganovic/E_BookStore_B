@@ -1,7 +1,7 @@
-﻿using EBookStore_B.Models;
+﻿using E_BookStore_B.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace EBookStore_B.Context
+namespace E_BookStore_B.Context
 {
     public class AppDbContext: DbContext
     {
