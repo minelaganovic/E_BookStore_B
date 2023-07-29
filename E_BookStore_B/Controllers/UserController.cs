@@ -14,6 +14,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
 using System.Net.Mail;
 using System.Net;
+using System.Security.Cryptography;
+using E_BookStore_B.Models.Dto;
+using Azure.Core;
 
 namespace E_BookStore_B.Controllers
 {
@@ -44,11 +47,15 @@ namespace E_BookStore_B.Controllers
             }
 
             user.Token = CreateJwtToken(user);
-
-            return Ok(new
+            var newAccessToken = user.Token;
+            var newRefreshToken = CreateRefreshToken();
+            user.RefreshToken= newRefreshToken;
+            user.RefreshTokenExpyTime=DateTime.Now.AddDays(5);
+            await _authContext.SaveChangesAsync();
+            return Ok(new TokenApiDto
             {
-                Token = user.Token,
-                Message = "Uspešno ste se prijavili!"
+                AccessToken=newAccessToken,
+                RefreshToken=newRefreshToken
             });
         }
 
@@ -88,7 +95,9 @@ namespace E_BookStore_B.Controllers
                 new Claim(ClaimTypes.Name, user.id.ToString()),
                 new Claim(ClaimTypes.Role, $"{user.Role}"),
                 new Claim(ClaimTypes.Name, $"{user.firstName} {user.lastName}"),
-                new Claim(ClaimTypes.Name, $"{user.address}")
+                new Claim(ClaimTypes.Name, $"{user.address}"),
+                new Claim(ClaimTypes.Name, $"{user.email}")
+
             });
 
             var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature);
@@ -100,6 +109,61 @@ namespace E_BookStore_B.Controllers
             };
             var token = jwtTokenhandler.CreateToken(tokenDescriptor);
             return jwtTokenhandler.WriteToken(token);
+        }
+        private string CreateRefreshToken()
+        {
+            var TokenBytes = RandomNumberGenerator.GetBytes(64);
+            var RefreshToken=Convert.ToBase64String(TokenBytes);
+            var TokenInUser = _authContext.Users
+                .Any(a=>a.RefreshToken == RefreshToken); //proverava da li user ima token
+            if(TokenInUser)
+            {
+                return CreateRefreshToken();
+            }
+            return RefreshToken;
+        }
+
+        private ClaimsPrincipal GetPrincipleFromExpiredToken(string token)
+        {
+            var key= Encoding.ASCII.GetBytes("veryverysceret.....");
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateLifetime = false
+            };
+            var tokenHandler= new JwtSecurityTokenHandler();
+            SecurityToken securityToken;
+            var principial= tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
+            var jwtSecurityToken=securityToken as JwtSecurityToken;
+            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                throw new SecurityTokenException("This is invalid token");
+            return principial;
+        }
+        [HttpPost("refresh")]
+        public async Task<IActionResult>Refres(TokenApiDto tokenApiDto)
+        {
+            if (tokenApiDto is null)
+                return BadRequest("Neispravan zahtev klijenta");
+            string accessToken = tokenApiDto.AccessToken;
+            string refreshToken=tokenApiDto.RefreshToken;
+            var principal = GetPrincipleFromExpiredToken(accessToken);
+            var email = principal.Identity.Name;
+            var user = await _authContext.Users.FirstOrDefaultAsync(a=>a.email==email);
+            if (user is null || user.RefreshToken != refreshToken || user.RefreshTokenExpyTime <= DateTime.Now)
+                return BadRequest("Neispravan zahtev");
+            var newaccessToken = CreateJwtToken(user);
+            var newrefresToken = CreateRefreshToken();
+            user.RefreshToken=newrefresToken;
+            await _authContext.SaveChangesAsync();
+            return Ok(new TokenApiDto() {
+                AccessToken = newaccessToken,
+                RefreshToken = newrefresToken
+            }              
+                );
+
         }
     }
 }
