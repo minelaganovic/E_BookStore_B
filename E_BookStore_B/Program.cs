@@ -1,5 +1,7 @@
 using E_BookStore_B.Context;
+using E_BookStore_B.Data;
 using E_BookStore_B.Data.Repo;
+using E_BookStore_B.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +27,7 @@ builder.Services.AddCors(option =>
     });
 });
 ///repository
-builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 
 builder.Services.Configure<FormOptions>(o =>
 {

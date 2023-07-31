@@ -1,4 +1,5 @@
 ﻿using E_BookStore_B.Data.Repo;
+using E_BookStore_B.Interfaces;
 using E_BookStore_B.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,32 +9,30 @@ namespace E_BookStore_B.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
-
-
-        private readonly IBookRepository _bookRepository;
-        public BookController(IBookRepository brep)
+        private readonly IUnitOfWork _uow;
+        public BookController(IUnitOfWork uow)
         {
-            _bookRepository= brep;
+            _uow = uow;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetBooks()
         {
-            var books= await _bookRepository.GetBooksAsync();
+            var books= await _uow.BookRepository.GetBooksAsync();
             return Ok(books);
         }
         [HttpPost]
         public async Task<IActionResult> AddBooks(Book book) 
         {
-            _bookRepository.AddBook(book);
-            await _bookRepository.SaveAsync();
+            _uow.BookRepository.AddBook(book);
+            await _uow.SaveAsync();
             return StatusCode(201);
         }
         [HttpDelete ("delete/{ID}")]
         public async Task<IActionResult> DeleteBooks(int id)
         {
-           _bookRepository.DeleteBook(id);
-            await _bookRepository.SaveAsync();
+            _uow.BookRepository.DeleteBook(id);
+            await _uow.SaveAsync();
             return Ok(id);
         }
 

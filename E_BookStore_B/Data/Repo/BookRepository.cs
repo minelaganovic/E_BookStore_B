@@ -1,4 +1,5 @@
 ﻿using E_BookStore_B.Context;
+using E_BookStore_B.Interfaces;
 using E_BookStore_B.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,16 +26,6 @@ namespace E_BookStore_B.Data.Repo
         public async Task<IEnumerable<Book>> GetBooksAsync()
         {
             return await authContext.Books.ToListAsync();
-        }
-
-        public async Task<bool> SaveAsync()
-        {
-            return await authContext.SaveChangesAsync()>0; 
-        }
-
-        public void UpdateBook(int bookId, Book book)
-        {
-            throw new NotImplementedException();
         }
     }
 }
