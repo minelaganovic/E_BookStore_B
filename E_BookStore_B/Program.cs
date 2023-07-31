@@ -1,4 +1,5 @@
 using E_BookStore_B.Context;
+using E_BookStore_B.Data.Repo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,9 @@ builder.Services.AddCors(option =>
         .AllowAnyHeader();
     });
 });
+///repository
+builder.Services.AddScoped<IBookRepository, BookRepository>();
+
 builder.Services.Configure<FormOptions>(o =>
 {
     o.ValueLengthLimit = int.MaxValue;
