@@ -1,6 +1,8 @@
 using E_BookStore_B.Context;
 using E_BookStore_B.Data;
 using E_BookStore_B.Data.Repo;
+using AutoMapper;
+using E_BookStore_B.Helpers;
 using E_BookStore_B.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Features;
@@ -28,6 +30,8 @@ builder.Services.AddCors(option =>
 });
 ///repository
 builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+//automaper
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
 builder.Services.Configure<FormOptions>(o =>
 {

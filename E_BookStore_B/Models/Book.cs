@@ -4,8 +4,6 @@ namespace E_BookStore_B.Models
 {
     public class Book
     {
-        // naslov, autora/e(ime, adresa, e-mail, web sajt), izdavača(ime, adresa, telefon, web sajt), godina izdanja, izdanje, cena, jezik publikacije, ISBN.
-
         [Key]
         public int id { get; set; }
         public string naslov { get; set; }
