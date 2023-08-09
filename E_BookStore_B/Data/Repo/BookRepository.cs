@@ -27,5 +27,10 @@ namespace E_BookStore_B.Data.Repo
         {
             return await authContext.Books.ToListAsync();
         }
+
+        async Task<Book> IBookRepository.FindBook(int bookId)
+        {
+            return await authContext.Books.FindAsync(bookId);
+        }
     }
 }

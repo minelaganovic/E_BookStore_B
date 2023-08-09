@@ -9,7 +9,8 @@ namespace E_BookStore_B.Helpers
         public AutoMapperProfiles() 
         {
             CreateMap<Book, BookDTO>().ReverseMap();
-            //CreateMap<BookDTO, Book>();
+            CreateMap<Book, BookUpdateDto>().ReverseMap();
+
 
         }
     }
