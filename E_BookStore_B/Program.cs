@@ -12,6 +12,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
+using E_BookStore_B.Extensions;
+using E_BookStore_B.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -70,28 +72,10 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseDeveloperExceptionPage();
 }
-else
-{
-    app.UseExceptionHandler(
-        options =>
-        {
-            options.Run(
-                async context =>
-                {
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    var ex = context.Features.Get<IExceptionHandlerFeature>();
-                    if(ex!= null)
-                    {
-                        await context.Response.WriteAsync(ex.Error.Message);
-                    }
-                }
-                );
-        }
-        );
-}
-
+app.ConfigureExceptionHandler(app.Environment);
+//app.ConfigureBuiltinExceptionHandler();
+///app.UseMiddleware<ExceptionMiddleware>();
 app.UseHttpsRedirection();
 app.UseCors("MyPolicy");
 app.UseStaticFiles();
