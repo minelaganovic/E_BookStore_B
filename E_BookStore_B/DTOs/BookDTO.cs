@@ -43,5 +43,10 @@ namespace E_BookStore_B.DTOs
 
         [Required(ErrorMessage = "Polje je obavezno")]
         public string tip_knjige { get; set; }
+
+        [Required(ErrorMessage = "Polje je obavezno")]
+
+        public string sazetak { get; set; }
+
     }
 }
