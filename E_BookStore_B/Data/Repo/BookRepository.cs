@@ -12,6 +12,7 @@ namespace E_BookStore_B.Data.Repo
         {
             this.authContext = appDbContext;
         }
+
         public void AddBook(Book book)
         {
             authContext.Books.AddAsync(book);

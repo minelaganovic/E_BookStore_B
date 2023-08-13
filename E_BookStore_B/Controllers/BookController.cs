@@ -3,6 +3,8 @@ using E_BookStore_B.Data.Repo;
 using E_BookStore_B.DTOs;
 using E_BookStore_B.Interfaces;
 using E_BookStore_B.Models;
+using E_BookStore_B.Queries;
+using MediatR;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -17,19 +19,29 @@ namespace E_BookStore_B.Controllers
 
         public readonly IMapper _mapper;
 
-        public BookController(IUnitOfWork uow, IMapper mapper)
+        private readonly IMediator _mediator;
+        public BookController(IUnitOfWork uow, IMapper mapper, IMediator mediator)
         {
             _uow = uow;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetBooks()
         {
-            throw new UnauthorizedAccessException();
-            var books= await _uow.BookRepository.GetBooksAsync();
-            var book = _mapper.Map<IEnumerable<BookDTO>>(books);
-            return Ok(book);
+            //throw new UnauthorizedAccessException(); greska autorizacije
+            var query= new GetBooksQuery();
+            var result= await _mediator.Send(query);
+            return Ok(result);
+        }
+
+        [HttpGet("{bookId}")]
+        public async Task<IActionResult> FindBok(int bookId)
+        {
+            var book = new GetBookByIDQuery(bookId);
+            var result= await _mediator.Send(book);
+            return result != null ? (IActionResult)Ok(result) : NotFound(); 
         }
         [HttpPost]
         public async Task<IActionResult> AddBooks(BookDTO bookdto) 
