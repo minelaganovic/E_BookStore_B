@@ -14,6 +14,9 @@ using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 using E_BookStore_B.Extensions;
 using E_BookStore_B.Middleware;
+using System.Reflection;
+using Microsoft.AspNetCore.Hosting;
+using E_BookStore_B.Handlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +24,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 //mediatr
-builder.Services.AddMediatR(opt => opt.RegisterServicesFromAssemblyContaining(typeof(Program)));
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssemblyContaining<Program>();
+    cfg.Lifetime = ServiceLifetime.Scoped;
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

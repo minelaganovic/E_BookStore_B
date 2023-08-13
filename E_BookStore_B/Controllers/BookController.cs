@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using E_BookStore_B.Commands;
 using E_BookStore_B.Data.Repo;
 using E_BookStore_B.DTOs;
 using E_BookStore_B.Interfaces;
@@ -37,20 +38,18 @@ namespace E_BookStore_B.Controllers
         }
 
         [HttpGet("{bookId}")]
-        public async Task<IActionResult> FindBok(int bookId)
+        public async Task<IActionResult>GetBook(int bookId)
         {
             var book = new GetBookByIDQuery(bookId);
             var result= await _mediator.Send(book);
-            return result != null ? (IActionResult)Ok(result) : NotFound(); 
+            return result !=null ?(IActionResult) Ok(result): NotFound(); 
         }
+
         [HttpPost]
-        public async Task<IActionResult> AddBooks(BookDTO bookdto) 
+        public async Task<IActionResult> AddBooks([FromBody] BookDTO bookdto) 
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            var book = _mapper.Map<Book>(bookdto);
-            _uow.BookRepository.AddBook(book);
-            await _uow.SaveAsync();
+            var book = new CreateBookCommand(bookdto);
+            var result = await _mediator.Send(book);
             return StatusCode(201);
         }
         [HttpPut("update/{id}")]

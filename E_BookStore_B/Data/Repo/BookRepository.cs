@@ -1,4 +1,5 @@
 ﻿using E_BookStore_B.Context;
+using E_BookStore_B.DTOs;
 using E_BookStore_B.Interfaces;
 using E_BookStore_B.Models;
 using Microsoft.EntityFrameworkCore;
@@ -29,9 +30,13 @@ namespace E_BookStore_B.Data.Repo
             return await authContext.Books.ToListAsync();
         }
 
-        async Task<Book> IBookRepository.FindBook(int bookId)
+        public async Task<Book> FindBook(int bookId)
         {
             return await authContext.Books.FindAsync(bookId);
+        }
+        public async Task<Book> GetBookAsync(int bookid)
+        {
+           return await authContext.Books.FirstOrDefaultAsync(p => p.id == bookid);
         }
     }
 }

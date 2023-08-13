@@ -2,10 +2,11 @@
 using E_BookStore_B.DTOs;
 using E_BookStore_B.Interfaces;
 using E_BookStore_B.Queries;
+using MediatR;
 
 namespace E_BookStore_B.Handlers
 {
-    public class GetBookByIDHandler
+    public class GetBookByIDHandler: IRequestHandler<GetBookByIDQuery, BookDTO>
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
@@ -16,14 +17,14 @@ namespace E_BookStore_B.Handlers
             _mapper = mapper;
         }
 
-        public async Task<List<BookDTO>> Handle(GetBookByIDQuery request, CancellationToken cancellationToken)
+        public async Task<BookDTO> Handle(GetBookByIDQuery request, CancellationToken cancellationToken)
         {
-            var books = await _uow.BookRepository.FindBook(request.Id);
+            var books = await _uow.BookRepository.GetBookAsync(request.Id);
             if (books == null)
             {
                 return null;
             }
-            return _mapper.Map<List<BookDTO>>(books);
+            return _mapper.Map<BookDTO>(books);
         }
     }
 }
