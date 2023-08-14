@@ -13,6 +13,10 @@ namespace E_BookStore_B.Data
             _appDbContext=appDbContext;
         }
         public IBookRepository BookRepository => new BookRepository(_appDbContext);
+        public IAutorRepository AutorRepository =>  new AutorRepository(_appDbContext);
+
+        public IIzdavacRepository IzdavacRepository =>  new IzdavacRepository(_appDbContext);
+
         public async Task<bool> SaveAsync()
         {
             return await _appDbContext.SaveChangesAsync()>0;

@@ -20,7 +20,8 @@ namespace E_BookStore_B.DTOs
         public int izdavac_id { get; set; }
 
         [Required(ErrorMessage = "Polje je obavezno")]
-        //[StringLength(4, MinimumLength = 4)]
+        [StringLength(4, MinimumLength = 4)]
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Samo brojevi su dozvoljeni")]
         public string godina_izdanja { get; set; }
 
         [Required(ErrorMessage = "Polje je obavezno")]
@@ -28,7 +29,6 @@ namespace E_BookStore_B.DTOs
         public string izdanje { get; set; }
 
         [Required(ErrorMessage = "Polje je obavezno")]
-        //[StringLength(20, MinimumLength = 1)]
         public int cena { get; set; }
 
         [Required(ErrorMessage = "Polje je obavezno")]
