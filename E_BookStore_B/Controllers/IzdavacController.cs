@@ -29,5 +29,12 @@ namespace E_BookStore_B.Controllers
             var result = await _mediator.Send(izdavac);
             return result != null ? (IActionResult)Ok(result) : NotFound();
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAllIzdavac()
+        {
+            var query = new GetIzdavacQuery();
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace E_BookStore_B.Queries
         {
             Id = id;
         }
+
     }
 }

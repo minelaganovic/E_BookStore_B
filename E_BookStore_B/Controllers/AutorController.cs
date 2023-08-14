@@ -30,6 +30,13 @@ namespace E_BookStore_B.Controllers
             var result = await _mediator.Send(autor);
             return result != null ? (IActionResult)Ok(result) : NotFound();
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAllAutor()
+        {
+            var query = new GetAutorQuery();
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
 
     }
 }

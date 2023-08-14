@@ -16,5 +16,9 @@ namespace E_BookStore_B.Data.Repo
         {
             return await authContext.Authors.FirstOrDefaultAsync(p => p.id == id);
         }
+        public async Task<IEnumerable<Autor>> GetAutorAsync()
+        {
+            return await authContext.Authors.ToListAsync();
+        }
     }
 }
