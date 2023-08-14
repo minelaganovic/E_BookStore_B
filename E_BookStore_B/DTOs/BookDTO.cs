@@ -20,22 +20,22 @@ namespace E_BookStore_B.DTOs
         public int izdavac_id { get; set; }
 
         [Required(ErrorMessage = "Polje je obavezno")]
-        [StringLength(20, MinimumLength = 4)]
+        //[StringLength(4, MinimumLength = 4)]
         public string godina_izdanja { get; set; }
 
         [Required(ErrorMessage = "Polje je obavezno")]
-        [StringLength(20, MinimumLength = 2)]
+        [StringLength(20, MinimumLength = 6)]
         public string izdanje { get; set; }
 
         [Required(ErrorMessage = "Polje je obavezno")]
-        [StringLength(20, MinimumLength = 1)]
+        //[StringLength(20, MinimumLength = 1)]
         public int cena { get; set; }
 
         [Required(ErrorMessage = "Polje je obavezno")]
         public string jezik_publikacije { get; set; }
 
         [Required(ErrorMessage = "Polje je obavezno")]
-        [StringLength(6, MinimumLength = 6)]
+        [StringLength(13, MinimumLength = 13)]
         public string ISBN { get; set; }
 
         [Required(ErrorMessage = "Polje je obavezno")]

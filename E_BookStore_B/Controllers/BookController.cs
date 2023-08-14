@@ -50,7 +50,7 @@ namespace E_BookStore_B.Controllers
         {
             var book = new CreateBookCommand(bookdto);
             var result = await _mediator.Send(book);
-            return StatusCode(201);
+            return Ok(result);
         }
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateBooks(int id,BookDTO bookdto)
