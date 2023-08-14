@@ -4,6 +4,7 @@ using E_BookStore_B.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_BookStore_B.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230814101142_v3")]
+    partial class v3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,8 +67,8 @@ namespace E_BookStore_B.Migrations
                     b.Property<int>("cena")
                         .HasColumnType("int");
 
-                    b.Property<int>("godina_izdanja")
-                        .HasColumnType("int");
+                    b.Property<string>("godina_izdanja")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("izdanje")
                         .HasColumnType("nvarchar(max)");

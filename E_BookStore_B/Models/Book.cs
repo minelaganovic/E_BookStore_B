@@ -9,7 +9,7 @@ namespace E_BookStore_B.Models
         public string naslov { get; set; }
         public int autor_id { get; set; }
         public int izdavac_id { get; set; }
-        public string godina_izdanja { get; set; }
+        public int godina_izdanja { get; set; }
         public string izdanje { get; set; }
         public int cena { get; set; }
         public string jezik_publikacije { get; set; }
