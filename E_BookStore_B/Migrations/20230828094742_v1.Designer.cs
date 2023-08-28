@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_BookStore_B.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230814104611_v9")]
-    partial class v9
+    [Migration("20230828094742_v1")]
+    partial class v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,10 +58,10 @@ namespace E_BookStore_B.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<int>("ISBN")
-                        .HasColumnType("int");
+                    b.Property<string>("ISBN")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("autor_id")
+                    b.Property<int>("autori_id")
                         .HasColumnType("int");
 
                     b.Property<int>("cena")

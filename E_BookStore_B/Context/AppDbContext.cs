@@ -16,6 +16,7 @@ namespace E_BookStore_B.Context
         public DbSet<Autor> Authors { get; set; }
 
         public DbSet<Izdavac> Publishers { get; set; }
+        public DbSet<SviAutori> SviAutori { get; set; }
 
 
         //modelBuilder je klasa koja pomaže za konekciju sa entitijem u .net
@@ -25,6 +26,7 @@ namespace E_BookStore_B.Context
             modelBuilder.Entity<Book>().ToTable("books");
             modelBuilder.Entity<Autor>().ToTable("authors");
             modelBuilder.Entity<Izdavac>().ToTable("publishers");
+            modelBuilder.Entity<SviAutori>().ToTable("sviautori");
         }
     }
 }

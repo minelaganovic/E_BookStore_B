@@ -5,24 +5,24 @@
 namespace E_BookStore_B.Migrations
 {
     /// <inheritdoc />
-    public partial class v11 : Migration
+    public partial class v1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "sazetak",
+            migrationBuilder.RenameColumn(
+                name: "autor_id",
                 table: "books",
-                type: "nvarchar(max)",
-                nullable: true);
+                newName: "autori_id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "sazetak",
-                table: "books");
+            migrationBuilder.RenameColumn(
+                name: "autori_id",
+                table: "books",
+                newName: "autor_id");
         }
     }
 }

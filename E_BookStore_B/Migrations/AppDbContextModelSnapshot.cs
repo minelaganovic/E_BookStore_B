@@ -58,7 +58,7 @@ namespace E_BookStore_B.Migrations
                     b.Property<string>("ISBN")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("autor_id")
+                    b.Property<int>("autori_id")
                         .HasColumnType("int");
 
                     b.Property<int>("cena")
@@ -116,6 +116,25 @@ namespace E_BookStore_B.Migrations
                     b.HasKey("id");
 
                     b.ToTable("publishers", (string)null);
+                });
+
+            modelBuilder.Entity("E_BookStore_B.Models.SviAutori", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<int>("autor_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("book_id")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("sviautori", (string)null);
                 });
 
             modelBuilder.Entity("E_BookStore_B.Models.User", b =>
