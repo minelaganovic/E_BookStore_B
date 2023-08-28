@@ -7,7 +7,6 @@ namespace E_BookStore_B.Models
         [Key]
         public int id { get; set; }
         public string naslov { get; set; }
-        public int autori_id { get; set; }
         public int izdavac_id { get; set; }
         public int godina_izdanja { get; set; }
         public string izdanje { get; set; }
