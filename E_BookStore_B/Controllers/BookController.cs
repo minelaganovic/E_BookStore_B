@@ -60,6 +60,9 @@ namespace E_BookStore_B.Controllers
             var result = await _mediator.Send(book);
             return Ok(result);
         }
+     /* 
+      * VEŽBA OSTALIH METODA *
+        
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateBooks(int id,BookDTO bookdto)
         {
@@ -96,6 +99,7 @@ namespace E_BookStore_B.Controllers
             await _uow.SaveAsync();
             return Ok(id);
         }
+     */
 
     }
 }

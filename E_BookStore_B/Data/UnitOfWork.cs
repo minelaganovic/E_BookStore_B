@@ -17,6 +17,9 @@ namespace E_BookStore_B.Data
 
         public IIzdavacRepository IzdavacRepository =>  new IzdavacRepository(_appDbContext);
 
+        public IOrderRepository OrderRepository => new OrderRepository(_appDbContext);
+
+
         public async Task<bool> SaveAsync()
         {
             return await _appDbContext.SaveChangesAsync()>0;

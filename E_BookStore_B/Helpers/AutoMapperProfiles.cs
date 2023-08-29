@@ -12,6 +12,7 @@ namespace E_BookStore_B.Helpers
             CreateMap<Book, BookUpdateDto>().ReverseMap();
             CreateMap<Autor, AutorDTO>().ReverseMap();
             CreateMap<Izdavac, IzdavacDTO>().ReverseMap();
+            CreateMap<Order, OrderDTO>().ReverseMap();
         }
     }
 }

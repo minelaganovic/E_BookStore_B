@@ -28,7 +28,6 @@ namespace E_BookStore_B.Data.Repo
         public async Task<IEnumerable<Book>> GetBooksAsync()
         {
             return await authContext.Books.OrderByDescending(c=>c.godina_izdanja).ThenByDescending(c=>c.izdanje).ToListAsync();
-            
         }
         public async Task<IEnumerable<Book>> GetSearchBook(string naslov)
         {
