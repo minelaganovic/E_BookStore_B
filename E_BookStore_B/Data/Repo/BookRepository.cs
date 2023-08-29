@@ -32,10 +32,7 @@ namespace E_BookStore_B.Data.Repo
         }
         public async Task<IEnumerable<Book>> GetSearchBook(string naslov)
         {
-            // return await authContext.Books.ToListAsync();
-            //return await authContext.Books.Where(c=>c.naslov.ToLower().Contains(naslov)).ToListAsync();
-            naslov = naslov.ToLower();  // Pretvorite naslov u mala slova za neosetljivu pretragu
-
+            naslov = naslov.ToLower(); 
             var matchingBooks = await authContext.Books
                 .Where(book => book.naslov.ToLower().Contains(naslov))
                 .ToListAsync();
