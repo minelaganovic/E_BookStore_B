@@ -45,6 +45,14 @@ namespace E_BookStore_B.Controllers
             return result !=null ?(IActionResult) Ok(result): NotFound(); 
         }
 
+        [HttpGet("naslov")]
+        public async Task<IActionResult> GetSearchBook(string naslov)
+        {
+            var book = new GetSearchBookByTitleQuery(naslov);
+            var result = await _mediator.Send(book);
+            return result != null ? (IActionResult)Ok(result) : NotFound();
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddBooks([FromBody] BookDTO bookdto) 
         {

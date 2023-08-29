@@ -8,6 +8,8 @@ namespace E_BookStore_B.Interfaces
     {
         Task<IEnumerable<Book>> GetBooksAsync();
         Task<Book> GetBookAsync(int id);
+
+        Task<IEnumerable<Book>> GetSearchBook(string naslov);
         void AddBook(Book book);
         void DeleteBook(int bookId);
         Task<Book>FindBook(int bookId);

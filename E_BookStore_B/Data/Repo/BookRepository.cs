@@ -27,7 +27,20 @@ namespace E_BookStore_B.Data.Repo
 
         public async Task<IEnumerable<Book>> GetBooksAsync()
         {
-            return await authContext.Books.ToListAsync();
+            return await authContext.Books.OrderByDescending(c=>c.godina_izdanja).ThenByDescending(c=>c.izdanje).ToListAsync();
+            
+        }
+        public async Task<IEnumerable<Book>> GetSearchBook(string naslov)
+        {
+            // return await authContext.Books.ToListAsync();
+            //return await authContext.Books.Where(c=>c.naslov.ToLower().Contains(naslov)).ToListAsync();
+            naslov = naslov.ToLower();  // Pretvorite naslov u mala slova za neosetljivu pretragu
+
+            var matchingBooks = await authContext.Books
+                .Where(book => book.naslov.ToLower().Contains(naslov))
+                .ToListAsync();
+
+            return matchingBooks;
         }
 
         public async Task<Book> FindBook(int bookId)
