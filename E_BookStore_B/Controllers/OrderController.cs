@@ -2,10 +2,14 @@
 using E_BookStore_B.Commands;
 using E_BookStore_B.DTOs;
 using E_BookStore_B.Interfaces;
+using E_BookStore_B.Models;
 using E_BookStore_B.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Mail;
+using System.Net;
+using System.Text;
 
 namespace E_BookStore_B.Controllers
 {
@@ -33,6 +37,52 @@ namespace E_BookStore_B.Controllers
             var result = await _mediator.Send(order);
             return Ok(result);
         }
+
+        [HttpPut("{id}/odobriti")]
+        public async Task<IActionResult> UpdateOrder(int id)
+        {
+            var command = new UpdateOrderStatusCommand { OrderId = id, NewStatus = "odobreno" };
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+            
+        }
+
+        /*[HttpPut("{id}")]
+        public async Task<IActionResult> PutUsers(int id, User ur)
+        {
+            var user = await _authContext.Users.FindAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.status = ur.status;
+
+            string to = user.email;
+            string from = "infromacionitest@gmail.com";
+            MailMessage message = new MailMessage(from, to);
+            string mailBody = $"Hi {user.firstName}, <br>" + Environment.NewLine + $"Vas zahtev za registraciju je prihvacen !" + " <br> " + Environment.NewLine + $"Loguj te ste http://localhost:4200/ ";
+            message.Body = mailBody;
+            message.BodyEncoding = Encoding.UTF8;
+            message.IsBodyHtml = true;
+            SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+            NetworkCredential networkCredential = new NetworkCredential("infromacionitest@gmail.com", "owgnxtbvgswezkxi");
+            client.EnableSsl = true;
+            client.UseDefaultCredentials = false;
+            client.Credentials = networkCredential;
+            try
+            {
+                client.Send(message);
+            }
+            catch (Exception ex) { throw ex; }
+            await _authContext.SaveChangesAsync();
+
+            return Ok(user);
+        }*/
+
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetBookGetOrderAsync(int userId)
         {

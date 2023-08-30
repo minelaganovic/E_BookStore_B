@@ -19,6 +19,12 @@ namespace E_BookStore_B.Data.Repo
             appDbContext.Orders.AddAsync(order);
         }
 
+        public void UpdateOrder(int id)
+        {
+            var ord = appDbContext.Orders.Find(id);
+            appDbContext.Orders.AddAsync(ord);
+        }
+
         public void DeleteOrder(int orderId)
         {
             var order = appDbContext.Orders.Find(orderId);

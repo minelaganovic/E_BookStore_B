@@ -44,6 +44,7 @@ builder.Services.AddCors(option =>
 });
 ///repository
 builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+
 //automaper
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
