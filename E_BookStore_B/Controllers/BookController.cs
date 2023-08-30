@@ -73,6 +73,15 @@ namespace E_BookStore_B.Controllers
             var result = await _mediator.Send(query);
             return Ok(result);
         }
+
+        [HttpGet("toplista")]
+        public async Task<IActionResult> GetTopListBooks()
+        {
+            //throw new UnauthorizedAccessException(); greska autorizacije
+            var query = new GetBooksQuery();
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
         /* 
          * VEŽBA OSTALIH METODA *
 

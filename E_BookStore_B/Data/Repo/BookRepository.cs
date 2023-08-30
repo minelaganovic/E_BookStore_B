@@ -45,7 +45,8 @@ namespace E_BookStore_B.Data.Repo
         }
         public async Task<Book> GetBookAsync(int bookid)
         {
-           return await authContext.Books.FirstOrDefaultAsync(p => p.id == bookid);
+           return await authContext
+                .Books.FirstOrDefaultAsync(p => p.id == bookid);
         }
     
         public async Task<IEnumerable<Book>>GetNewBooks(int page, int pageSize)
@@ -61,6 +62,14 @@ namespace E_BookStore_B.Data.Repo
                 .OrderByDescending(book => book.id)
                 .Skip(skipCount)
                 .Take(pageSize)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Book>>GetTopListBooks()
+        {
+            return await authContext.Books
+                .Where(c => c.kolicina >= 1 && c.kolicina <= 5)
+                .OrderBy(c => c.kolicina)
                 .ToListAsync();
         }
     }
