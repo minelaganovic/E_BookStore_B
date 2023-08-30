@@ -47,5 +47,21 @@ namespace E_BookStore_B.Data.Repo
         {
            return await authContext.Books.FirstOrDefaultAsync(p => p.id == bookid);
         }
+    
+        public async Task<IEnumerable<Book>>GetNewBooks(int page, int pageSize)
+        {
+            if (page < 1)
+            {
+                page = 1;
+            }
+
+            int skipCount = (page - 1) * pageSize;
+
+            return await authContext.Books
+                .OrderByDescending(book => book.id)
+                .Skip(skipCount)
+                .Take(pageSize)
+                .ToListAsync();
+        }
     }
 }

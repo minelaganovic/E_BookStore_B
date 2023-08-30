@@ -60,46 +60,59 @@ namespace E_BookStore_B.Controllers
             var result = await _mediator.Send(book);
             return Ok(result);
         }
-     /* 
-      * VEŽBA OSTALIH METODA *
-        
-        [HttpPut("update/{id}")]
-        public async Task<IActionResult> UpdateBooks(int id,BookDTO bookdto)
+
+        [HttpGet("paginacija")]
+        public async Task<IActionResult> GetNewBooks(int page = 1, int pageSize = 3)
         {
-                if (id != bookdto.id)
-                    return BadRequest("Izmena nije dozvoljena!");
-                var bookFromDb = await _uow.BookRepository.FindBook(id);
-                if (bookFromDb == null)
-                    return BadRequest("Izmena nije dozvoljena!");
-                _mapper.Map(bookdto, bookFromDb);
-                throw new Exception("Desila se neka greska");
-                await _uow.SaveAsync();
-                return StatusCode(200);          
+            var query = new GetNewBooksQuery
+            {
+                Page = page,
+                PageSize = pageSize
+            };
+
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
-        [HttpPatch("update/{id}")]
-        public async Task<IActionResult> UpdateBooksPatch(int id,JsonPatchDocument<Book> bookToPatch)
-        {
-            var bookFromDb = await _uow.BookRepository.FindBook(id);
-            bookToPatch.ApplyTo( bookFromDb, ModelState);
-            await _uow.SaveAsync();
-            return StatusCode(200);
-        }
-        [HttpPut("updateBookKol/{id}")]
-        public async Task<IActionResult> UpdateBooks(int id, BookUpdateDto bookdto)
-        {
-            var bookFromDb = await _uow.BookRepository.FindBook(id);
-            _mapper.Map(bookdto, bookFromDb);
-            await _uow.SaveAsync();
-            return StatusCode(200);
-        }
-        [HttpDelete ("delete/{ID}")]
-        public async Task<IActionResult> DeleteBooks(int id)
-        {
-            _uow.BookRepository.DeleteBook(id);
-            await _uow.SaveAsync();
-            return Ok(id);
-        }
-     */
+        /* 
+         * VEŽBA OSTALIH METODA *
+
+           [HttpPut("update/{id}")]
+           public async Task<IActionResult> UpdateBooks(int id,BookDTO bookdto)
+           {
+                   if (id != bookdto.id)
+                       return BadRequest("Izmena nije dozvoljena!");
+                   var bookFromDb = await _uow.BookRepository.FindBook(id);
+                   if (bookFromDb == null)
+                       return BadRequest("Izmena nije dozvoljena!");
+                   _mapper.Map(bookdto, bookFromDb);
+                   throw new Exception("Desila se neka greska");
+                   await _uow.SaveAsync();
+                   return StatusCode(200);          
+           }
+           [HttpPatch("update/{id}")]
+           public async Task<IActionResult> UpdateBooksPatch(int id,JsonPatchDocument<Book> bookToPatch)
+           {
+               var bookFromDb = await _uow.BookRepository.FindBook(id);
+               bookToPatch.ApplyTo( bookFromDb, ModelState);
+               await _uow.SaveAsync();
+               return StatusCode(200);
+           }
+           [HttpPut("updateBookKol/{id}")]
+           public async Task<IActionResult> UpdateBooks(int id, BookUpdateDto bookdto)
+           {
+               var bookFromDb = await _uow.BookRepository.FindBook(id);
+               _mapper.Map(bookdto, bookFromDb);
+               await _uow.SaveAsync();
+               return StatusCode(200);
+           }
+           [HttpDelete ("delete/{ID}")]
+           public async Task<IActionResult> DeleteBooks(int id)
+           {
+               _uow.BookRepository.DeleteBook(id);
+               await _uow.SaveAsync();
+               return Ok(id);
+           }
+        */
 
     }
 }
