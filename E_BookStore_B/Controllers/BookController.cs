@@ -78,7 +78,7 @@ namespace E_BookStore_B.Controllers
         public async Task<IActionResult> GetTopListBooks()
         {
             //throw new UnauthorizedAccessException(); greska autorizacije
-            var query = new GetBooksQuery();
+            var query = new GetTopListBooksQuery();
             var result = await _mediator.Send(query);
             return Ok(result);
         }

@@ -6,12 +6,12 @@ using MediatR;
 
 namespace E_BookStore_B.Handlers
 {
-    public class GetTopListBooksHndler: IRequestHandler<GetTopListBooksQuery, List<BookDTO>>
+    public class GetTopListBooksHandler: IRequestHandler<GetTopListBooksQuery, List<BookDTO>>
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
 
-        public GetTopListBooksHndler(IUnitOfWork uow, IMapper mapper)
+        public GetTopListBooksHandler(IUnitOfWork uow, IMapper mapper)
         {
             _uow = uow;
             _mapper = mapper;
