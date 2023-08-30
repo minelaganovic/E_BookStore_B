@@ -40,5 +40,12 @@ namespace E_BookStore_B.Controllers
             var result = await _mediator.Send(order);
             return result != null ? (IActionResult)Ok(result) : NotFound();
         }
+        [HttpGet]
+        public async Task<IActionResult> GetOrders()
+        {
+            var query = new GetOrdersQuery();
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
     }
 }

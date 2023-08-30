@@ -165,5 +165,11 @@ namespace E_BookStore_B.Controllers
                 );
 
         }
+        [Authorize]
+        [HttpGet]
+        public async Task<IEnumerable<User>> GetAllUsers()
+        {
+            return await _authContext.Users.ToListAsync();
+        }
     }
 }
