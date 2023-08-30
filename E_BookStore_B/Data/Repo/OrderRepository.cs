@@ -35,9 +35,10 @@ namespace E_BookStore_B.Data.Repo
             return await appDbContext.Orders.ToListAsync();
         }
 
-        public async Task<Order> GetOrderAsync(int id)
+        /// da preuzme sve ordere po user_id-u
+        public async Task<IEnumerable<Order>> GetOrderAsync(int uid)
         {
-            return await appDbContext.Orders.FirstOrDefaultAsync(p => p.id == id);
+            return await appDbContext.Orders.Where(p => p.user_id == uid).ToListAsync();
         }
     }
 }

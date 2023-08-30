@@ -2,6 +2,7 @@
 using E_BookStore_B.Commands;
 using E_BookStore_B.DTOs;
 using E_BookStore_B.Interfaces;
+using E_BookStore_B.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,6 +33,12 @@ namespace E_BookStore_B.Controllers
             var result = await _mediator.Send(order);
             return Ok(result);
         }
-
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetBookGetOrderAsync(int userId)
+        {
+            var order = new GetOrderByUIDQuery(userId);
+            var result = await _mediator.Send(order);
+            return result != null ? (IActionResult)Ok(result) : NotFound();
+        }
     }
 }
