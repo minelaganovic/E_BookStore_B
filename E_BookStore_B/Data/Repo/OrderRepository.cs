@@ -24,6 +24,19 @@ namespace E_BookStore_B.Data.Repo
             var ord = appDbContext.Orders.Find(id);
             appDbContext.Orders.AddAsync(ord);
         }
+        public void DeliverOrder(int id, int numord)
+        {
+           var ord = appDbContext.Orders.Find(id);
+           appDbContext.Orders.AddAsync(ord);
+            //var order = appDbContext.Orders.Find(id);
+
+            //if (order != null)
+            //{
+            //    order.status = "isporučeno";
+            //    order.kolicina -= numord;  
+            //    appDbContext.AddAsync(order);
+           // }
+        }
 
         public void DeleteOrder(int orderId)
         {

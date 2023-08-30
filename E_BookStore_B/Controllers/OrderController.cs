@@ -46,42 +46,17 @@ namespace E_BookStore_B.Controllers
             var result = await _mediator.Send(command);
 
             return Ok(result);
-            
         }
 
-        /*[HttpPut("{id}")]
-        public async Task<IActionResult> PutUsers(int id, User ur)
+        [HttpPut("{id}/isporuciti")]
+        public async Task<IActionResult> DeliverOrder(int id, int deliveredQuantity)
         {
-            var user = await _authContext.Users.FindAsync(id);
+            var command = new DeliveredOrderCommand { OrderId = id, NewStatus = "isporučeno",NumOrder=deliveredQuantity };
 
-            if (user == null)
-            {
-                return NotFound();
-            }
+            var result = await _mediator.Send(command);
 
-            user.status = ur.status;
-
-            string to = user.email;
-            string from = "infromacionitest@gmail.com";
-            MailMessage message = new MailMessage(from, to);
-            string mailBody = $"Hi {user.firstName}, <br>" + Environment.NewLine + $"Vas zahtev za registraciju je prihvacen !" + " <br> " + Environment.NewLine + $"Loguj te ste http://localhost:4200/ ";
-            message.Body = mailBody;
-            message.BodyEncoding = Encoding.UTF8;
-            message.IsBodyHtml = true;
-            SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
-            NetworkCredential networkCredential = new NetworkCredential("infromacionitest@gmail.com", "owgnxtbvgswezkxi");
-            client.EnableSsl = true;
-            client.UseDefaultCredentials = false;
-            client.Credentials = networkCredential;
-            try
-            {
-                client.Send(message);
-            }
-            catch (Exception ex) { throw ex; }
-            await _authContext.SaveChangesAsync();
-
-            return Ok(user);
-        }*/
+            return Ok(result);
+        }
 
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetBookGetOrderAsync(int userId)
